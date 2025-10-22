@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Final SESI - Produtos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Projeto Final SESI</h1>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="header-section">
+        <h2>Produtos</h2>
+        <a href="/produtos/novo" class="btn-novo">Novo</a>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Editar</th>
+            <th>Deletar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (produtos.length === 0) { %>
+            <tr>
+              <td colspan="7" style="text-align: center;">Nenhum produto cadastrado</td>
+            </tr>
+          <% } else { %>
+            <% produtos.forEach(produto => { %>
+              <tr>
+                <td><%= produto.id %></td>
+                <td><%= produto.descricao %></td>
+                <td><%= produto.quantidade %></td>
+                <td>R$ <%= parseFloat(produto.valor).toFixed(2).replace('.', ',') %></td>
+                <td><%= new Date(produto.data).toLocaleDateString('pt-BR') %></td>
+                <td>
+                  <a href="/produtos/editar/<%= produto.id %>" class="link-action">Editar</a>
+                </td>
+                <td>
+                  <form action="/produtos/deletar/<%= produto.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Deseja realmente deletar este produto?');">
+                    <button type="submit" class="link-action delete">Deletar</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
+
+
